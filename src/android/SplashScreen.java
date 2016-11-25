@@ -352,13 +352,20 @@ public class SplashScreen extends CordovaPlugin {
                 spinnerDialog.setCancelable(false);
                 spinnerDialog.setIndeterminate(true);
 
+                DisplayMetrics displayMetrics = new DisplayMetrics();
+                cordova.getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+                int height = displayMetrics.heightPixels;
+
                 RelativeLayout centeredLayout = new RelativeLayout(cordova.getActivity());
                 centeredLayout.setGravity(Gravity.CENTER);
+                centeredLayout.setPadding(0, (int) Math.round(height * 0.5), 0, 0);
                 centeredLayout.setLayoutParams(new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 
                 ProgressBar progressBar = new ProgressBar(webView.getContext());
+                progressBar.getIndeterminateDrawable().setColorFilter(Color.parseColor("#ee8a00"), PorterDuff.Mode.SRC_IN);
+
                 RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-                layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
+                layoutParams.addRule(RelativeLayout.ALIGN_BOTTOM, RelativeLayout.TRUE);
                 progressBar.setLayoutParams(layoutParams);
 
                 centeredLayout.addView(progressBar);
